@@ -34,13 +34,11 @@ public class ConnectFour {
 			char playerMark = (moveNumber % 2 == 1) ? 'x' : 'o';
 
 			System.out.println("Player " + playerMark + "´s turn:");
-
-			System.out.println("Enter row (0-5): ");
-			int row = scanner.nextInt();
-
 			System.out.println("Enter column (0-6): ");
 			int col = scanner.nextInt();
-
+		
+			int row = findLowestAvailableRow(board, col);
+			
 			board[row][col] = playerMark;
 
 			for (int i = 0; i < rows; i++) {
@@ -59,6 +57,15 @@ public class ConnectFour {
 
 		scanner.close();
 	}
+	
+	 private static int findLowestAvailableRow(char[][] board, int col) {
+	        for (int i = board.length - 1; i >= 0; i--) {
+	            if (board[i][col] == ' ') {
+	                return i;
+	            }
+	        }
+	        return -1; // Column is full
+	    }
 
 }
 
@@ -68,6 +75,16 @@ public class ConnectFour {
 //	int play;
 //	do {
 //		
+
+
+
+// If no empty spot is found, ask for another input
+//if (row == -1) {
+//    System.out.println("Column is full. Please choose another column.");
+//    continue;
+//}
+
+
 //		printGrid(board);
 //		
 //		System.out.println("Player " + player + ", choose a column: ");
