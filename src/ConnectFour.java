@@ -21,9 +21,12 @@ public class ConnectFour {
         System.out.println("Let's start!");
         Scanner scanner = new Scanner(System.in);
         int moveNumber = 1;
-        
+        char p1 = 'x';  //'⚫';  I NEED A DIFFRENT BOARD FOR THE COOLER SYMBOLS
+        char p2 = 'o';  //'⚪';
+        System.out.println("Player 1: " + p1 + ", Player 2: " + p2);
+
         while (true) {
-            char playerMark = (moveNumber % 2 == 1) ? 'x' : 'o';
+            char playerMark = (moveNumber % 2 == 1) ? p1 : p2;
             System.out.println("Player " + playerMark + "'s turn:");
             
             // Input validation for column number
@@ -62,6 +65,11 @@ public class ConnectFour {
             if (moveNumber > rows * cols) {
                 break;
             }
+         // Check for a win
+            if (checkWin(board, row, col, playerMark)) {
+                System.out.println("Player " + playerMark + " wins!");
+                break;
+            }
         }
 
         scanner.close();
@@ -84,90 +92,57 @@ public class ConnectFour {
             System.out.println();
         }
     }
+    
+    private static boolean checkWin(char[][] board, int lastRow, int lastCol, char playerMark) {
+            // Check horizontal line
+            int countLeft = 0;
+            for (int i = lastCol - 1; i >= 0 && board[lastRow][i] == playerMark; i--) {
+                countLeft++;
+            }
+            int countRight = 0;
+            for (int i = lastCol + 1; i < board[0].length && board[lastRow][i] == playerMark; i++) {
+                countRight++;
+            }
+            if (countLeft + countRight >= 3) {
+                return true;
+            }
+
+            // Check vertical line
+            int countDown = 0;
+            for (int i = lastRow + 1; i < board.length && board[i][lastCol] == playerMark; i++) {
+                countDown++;
+            }
+            if (countDown >= 3) {
+                return true;
+            }
+
+            // Check diagonal line (top-left to bottom-right)
+            int countDiagUp = 0;
+            for (int i = lastRow - 1, j = lastCol - 1; i >= 0 && j >= 0 && board[i][j] == playerMark; i--, j--) {
+                countDiagUp++;
+            }
+            int countDiagDown = 0;
+            for (int i = lastRow + 1, j = lastCol + 1; i < board.length && j < board[0].length && board[i][j] == playerMark; i++, j++) {
+                countDiagDown++;
+            }
+            if (countDiagUp + countDiagDown >= 3) {
+                return true;
+            }
+
+            // Check diagonal line (top-right to bottom-left)
+            int countAntiDiagUp = 0;
+            for (int i = lastRow - 1, j = lastCol + 1; i >= 0 && j < board[0].length && board[i][j] == playerMark; i--, j++) {
+                countAntiDiagUp++;
+            }
+            int countAntiDiagDown = 0;
+            for (int i = lastRow + 1, j = lastCol - 1; i < board.length && j >= 0 && board[i][j] == playerMark; i++, j--) {
+                countAntiDiagDown++;
+            }
+            if (countAntiDiagUp + countAntiDiagDown >= 3) {
+                return true;
+            }
+
+            return false;
+    }
+    
 }
-
-//	boolean playerOneTurn = true;
-//while ( winner == false && turn <=42) {
-//	boolean validPlay;
-//	int play;
-//	do {
-//		
-
-
-
-
-
-//		printGrid(board);
-//		
-//		System.out.println("Player " + player + ", choose a column: ");
-//		play = in.nextInt();
-//		
-//		validPlay = validate(play,board);
-//		
-//	}while (validPlay == false);
-//	
-//	
-//}
-//
-//	public static boolean validate(int column, char[][] board){
-//		//valid column?
-//		if (column < 0 || column > board[0].length){
-//			return false;
-//		}
-//		
-//		//full column?
-//		if (board[0][column] != ' '){
-//			return false;
-//		}
-//		
-//		return true;
-//	}
-//	
-//	public static boolean isWinner(char player, char[][] board){
-//		//check for 4 across
-//		for(int row = 0; row<board.length; row++){
-//			for (int col = 0;col < board[0].length - 3;col++){
-//				if (board[row][col] == player   && 
-//					board[row][col+1] == player &&
-//					board[row][col+2] == player &&
-//					board[row][col+3] == player){
-//					return true;
-//				}
-//			}			
-//		}
-//		//check for 4 up and down
-//		for(int row = 0; row < board.length - 3; row++){
-//			for(int col = 0; col < board[0].length; col++){
-//				if (board[row][col] == player   && 
-//					board[row+1][col] == player &&
-//					board[row+2][col] == player &&
-//					board[row+3][col] == player){
-//					return true;
-//				}
-//			}
-//		}
-//		//check upward diagonal
-//		for(int row = 3; row < board.length; row++){
-//			for(int col = 0; col < board[0].length - 3; col++){
-//				if (board[row][col] == player   && 
-//					board[row-1][col+1] == player &&
-//					board[row-2][col+2] == player &&
-//					board[row-3][col+3] == player){
-//					return true;
-//				}
-//			}
-//		}
-//		//check downward diagonal
-//		for(int row = 0; row < board.length - 3; row++){
-//			for(int col = 0; col < board[0].length - 3; col++){
-//				if (board[row][col] == player   && 
-//					board[row+1][col+1] == player &&
-//					board[row+2][col+2] == player &&
-//					board[row+3][col+3] == player){
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-//	}
-//}
