@@ -40,7 +40,7 @@ public class ConnectFour {
                     }
                 } else {
                     System.out.println("Invalid input. Please enter an integer.");
-                    scanner.next(); // Clear the invalid token
+                    scanner.next();
                 }
             }
 
@@ -52,19 +52,21 @@ public class ConnectFour {
             
             board.setTile(row, col, playerTile);
             
-            board.print();
-            
             moveNumber++;
             if (moveNumber > Board.ROWS * Board.COLS) {
+            	board.print();
             	System.out.println("The board is completely filled! It´s a tie:D");
                 break;
             }
+            
          // Check for a win
             if (board.checkWin(row, col, playerTile)) {
-        
+            	board.print();
             	System.out.println("Player " + playerTile + " wins! :D");
                 break;
             }
+            
+            board.print();
         }
 
         scanner.close();
