@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 import board.Board;
-import tiles.Tiles;
+import tiles.Tile;
 
 public class ConnectFour {
     public static void main(String[] args) {
@@ -14,13 +14,13 @@ public class ConnectFour {
         System.out.println("Let's start!");
         Scanner scanner = new Scanner(System.in);
         int moveNumber = 1;
-        Tiles p1 = Tiles.PLAYER1;
-        Tiles p2 = Tiles.PLAYER2;
+        Tile p1 = Tile.PLAYER1;
+        Tile p2 = Tile.PLAYER2;
         
         System.out.println("Player 1: " + p1.getSymbol() + ", Player 2: " + p2.getSymbol());
 
         while (true) {
-            Tiles playerTile = (moveNumber % 2 == 1) ? p1 : p2;
+            Tile playerTile = (moveNumber % 2 == 1) ? p1 : p2;
             System.out.println("Player " + playerTile.getSymbol() + "'s turn:");
             
             // Input validation for column number

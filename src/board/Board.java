@@ -2,13 +2,13 @@ package board;
 
 import java.util.ArrayList;
 
-import tiles.Tiles;
+import tiles.Tile;
 
 public class Board {
 	public static final int ROWS = 6;
 	public static final int COLS = 7;
 
-	private Tiles[][] board = new Tiles[ROWS][COLS];
+	private Tile[][] board = new Tile[ROWS][COLS];
 
 	public Board() {
 		this.init();
@@ -17,7 +17,7 @@ public class Board {
 	private void init() {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
-				this.board[i][j] = Tiles.EMPTY;
+				this.board[i][j] = Tile.EMPTY;
 
 			}
 		}
@@ -27,9 +27,9 @@ public class Board {
 	public void print() {
 		System.out.println(" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | ");
 		for (int i = 0; i < board.length; i++) {
-			System.out.print(Tiles.BORDER.getSymbol());
+			System.out.print(Tile.BORDER.getSymbol());
 			for (int j = 0; j < board[i].length; j++) {
-				System.out.print(board[i][j].getSymbol() + Tiles.BORDER.getSymbol());
+				System.out.print(board[i][j].getSymbol() + Tile.BORDER.getSymbol());
 			}
 			System.out.println();
 		}
@@ -37,18 +37,18 @@ public class Board {
 
 	public int findLowestAvailableRow(int col) {
 		for (int i = board.length - 1; i >= 0; i--) {
-			if (board[i][col] == Tiles.EMPTY) {
+			if (board[i][col] == Tile.EMPTY) {
 				return i;
 			}
 		}
 		return -1; // Column is full
 	}
 
-	public void setTile(int row, int col, Tiles playerTile) {
+	public void setTile(int row, int col, Tile playerTile) {
 		board[row][col] = playerTile;
 	}
 
-	public boolean checkWin(int lastRow, int lastCol, Tiles playerTile) {
+	public boolean checkWin(int lastRow, int lastCol, Tile playerTile) {
 		boolean isHorizontalWin = checkHorizontal(lastRow, lastCol, playerTile);
 		if(isHorizontalWin) {
 			return true;
@@ -72,7 +72,7 @@ public class Board {
 		return false;
 	}
 
-	private boolean checkAntiDiagonal(int lastRow, int lastCol, Tiles playerTile) {
+	private boolean checkAntiDiagonal(int lastRow, int lastCol, Tile playerTile) {
 		ArrayList<Position> positions = new ArrayList<>();
 		positions.add(new Position(lastRow,lastCol));
 		for (int i = lastRow - 1, j = lastCol + 1; i >= 0 && j < board[0].length && board[i][j] == playerTile; i--, j++) {
@@ -82,7 +82,7 @@ public class Board {
 			positions.add(new Position(i,j));
 		}
 		if (positions.size() > 3) {
-			Tiles highlightingTile = playerTile == Tiles.PLAYER1? Tiles.PLAYER1_HIGHLIGHTED: Tiles.PLAYER2_HIGHLIGHTED;
+			Tile highlightingTile = playerTile == Tile.PLAYER1? Tile.PLAYER1_HIGHLIGHTED: Tile.PLAYER2_HIGHLIGHTED;
 			positions.forEach(position -> setTile(position.row(),position.col(),highlightingTile));
 			return true;
 		}
@@ -90,7 +90,7 @@ public class Board {
 		return false;
 	}
 
-	private boolean checkDiagonal(int lastRow, int lastCol, Tiles playerTile) {
+	private boolean checkDiagonal(int lastRow, int lastCol, Tile playerTile) {
 		ArrayList<Position> positions = new ArrayList<>();
 		positions.add(new Position(lastRow,lastCol));
 		for (int i = lastRow - 1, j = lastCol - 1; i >= 0 && j >= 0 && board[i][j] == playerTile; i--, j--) {
@@ -101,7 +101,7 @@ public class Board {
 			positions.add(new Position(i,j));
 		}
 		if (positions.size() > 3) {
-			Tiles highlightingTile = playerTile == Tiles.PLAYER1? Tiles.PLAYER1_HIGHLIGHTED: Tiles.PLAYER2_HIGHLIGHTED;
+			Tile highlightingTile = playerTile == Tile.PLAYER1? Tile.PLAYER1_HIGHLIGHTED: Tile.PLAYER2_HIGHLIGHTED;
 			positions.forEach(position -> setTile(position.row(),position.col(),highlightingTile));
 
 			return true;
@@ -109,14 +109,14 @@ public class Board {
 		return false;
 	}
 
-	private boolean checkVertical(int lastRow, int lastCol, Tiles playerTile) {
+	private boolean checkVertical(int lastRow, int lastCol, Tile playerTile) {
 		ArrayList<Position> positions = new ArrayList<>();
 		positions.add(new Position(lastRow,lastCol));
 		for (int i = lastRow + 1; i < board.length && board[i][lastCol] == playerTile; i++) {
 			positions.add(new Position(i,lastCol));
 		}
 		if (positions.size() > 3) {
-			Tiles highlightingTile = playerTile == Tiles.PLAYER1? Tiles.PLAYER1_HIGHLIGHTED: Tiles.PLAYER2_HIGHLIGHTED;
+			Tile highlightingTile = playerTile == Tile.PLAYER1? Tile.PLAYER1_HIGHLIGHTED: Tile.PLAYER2_HIGHLIGHTED;
 			positions.forEach(position -> setTile(position.row(),position.col(),highlightingTile));
 
 			return true;
@@ -124,7 +124,7 @@ public class Board {
 		return false;
 	}
 
-	private boolean checkHorizontal(int lastRow, int lastCol, Tiles playerTile) {
+	private boolean checkHorizontal(int lastRow, int lastCol, Tile playerTile) {
 		ArrayList<Position> positions = new ArrayList<>();
 		positions.add(new Position(lastRow,lastCol));
 		for (int i = lastCol - 1; i >= 0 && board[lastRow][i] == playerTile; i--) {
@@ -134,7 +134,7 @@ public class Board {
 			positions.add(new Position(lastRow,i));
 		}
 		if (positions.size() > 3) {
-			Tiles highlightingTile = playerTile == Tiles.PLAYER1? Tiles.PLAYER1_HIGHLIGHTED: Tiles.PLAYER2_HIGHLIGHTED;
+			Tile highlightingTile = playerTile == Tile.PLAYER1? Tile.PLAYER1_HIGHLIGHTED: Tile.PLAYER2_HIGHLIGHTED;
 			positions.forEach(position -> setTile(position.row(),position.col(),highlightingTile));
 
 			return true;

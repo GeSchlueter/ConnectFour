@@ -1,9 +1,9 @@
 package tiles;
 
-import static tiles.ConsoleColours.BACKGROUND_YELLOW;
-import static tiles.ConsoleColours.BACKGROUND_RESET;
+import static tiles.ConsoleColoursUtil.BACKGROUND_RESET;
+import static tiles.ConsoleColoursUtil.BACKGROUND_YELLOW;
 
-public enum Tiles {
+public enum Tile {
 	
 	EMPTY(" "), 
 	PLAYER1("○"), 
@@ -15,7 +15,7 @@ public enum Tiles {
 	private String symbol;
 
 	
-	private Tiles(String symbol) {
+	private Tile(String symbol) {
 		this.symbol = symbol;
 	}
 
