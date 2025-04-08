@@ -27,6 +27,11 @@ public class ConnectFour {
             int col = -1;
             boolean validInput = false;
             
+            if ("exit".equals(scanner.nextLine())) {
+                System.out.println("Exiting game. Goodbye!");
+                System.exit(0);
+            }
+            
             while (!validInput) {
                 System.out.print("Enter column (0-6): ");
                 
